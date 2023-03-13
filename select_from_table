@@ -1,0 +1,28 @@
+ls ./DataBases
+echo "Select Databse : "
+read dbname
+ls DataBases/$dbname
+echo " Enter table name "
+read tname
+echo "select an option"
+list=("Show table data" "Search in a table "
+         "Delete Row from Table.")
+select y in "${list[@]}"
+ do
+if [[ $y == "Show table data" ]]
+then
+cat DataBases/$dbname/$tname
+ fi
+
+ if [[ $y == "Search in a table " ]]
+then
+echo " Enter search word"
+read word
+if [[ -z `grep -i $word DataBases/$dbname/$tname` ]]
+then
+echo " This word not exsit: "
+else
+grep -i $word DataBases/$dbname/$tname
+fi
+fi 
+done 

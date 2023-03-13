@@ -1,0 +1,13 @@
+ls ./DataBases 
+echo "Select Databse : "
+read dbname
+ls DataBases/$dbname
+echo " Enter table name "
+read tname
+cat DataBases/$dbname/$tname
+echo " Enter the word to delete row: "
+read word
+sed -i "/$word/d" DataBases/$dbname/$tname                    
+echo " table after updated "
+cat DataBases/$dbname/$tname
+                                   

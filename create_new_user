@@ -1,0 +1,18 @@
+currentuser=`whoami`
+
+if [[ $currentuser == $(grep -w "$currentuser" DB_admins.db) ]] 
+ then
+    
+    echo "Enter new user"
+	read new_user
+	if [[ $new_user == $(grep -w "$new_user" DB_admins.db) ]] 
+	then
+		
+		echo "User already exist, Enter a different name "
+	else 
+		echo $new_user  >> DB_admins.db
+		echo "User created"	
+	fi
+else 
+		echo "only admin user can run this prgram" 
+fi

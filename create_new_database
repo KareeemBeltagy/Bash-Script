@@ -1,0 +1,14 @@
+currentuser=`whoami` #get the currnet user name 
+if [[ $currentuser == $(grep -w "$currentuser" DB_admins.db) ]] 
+ then
+    
+    echo "Enter the Database name"
+	read dbname   #get the DB name
+	mkdir -p DataBases/$dbname
+	#touch DataBases/$dbname/owner.txt
+	echo $currentuser >> DataBases/$dbname/owner.txt
+	
+	echo "Database Created successfully"
+else 
+		echo "only admin user can run this program" 
+fi 

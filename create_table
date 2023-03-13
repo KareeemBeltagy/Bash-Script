@@ -1,0 +1,48 @@
+currentuser=`whoami` #get the currnet user name 
+
+if [[ $currentuser == $(grep -w "$currentuser" DB_admins.db) ]] 
+ then 
+ echo "Select one of the following DataBases"
+	ls DataBases		#list avaliable databases
+	read db_check		#store name of database to delete
+    owner=$(cat ./DataBases/$db_check/owner.txt | awk '{print $1}') #get DB owner
+	#check the owner and current user
+	
+	if [[ $currentuser == $owner ]] 
+       then
+		echo "Enter table name"
+		read tname
+		echo "Enter number of columns"
+		read cols
+		#chech for the exisitenceof that table
+			currtable=$(ls ./DataBases/$db_check | grep -w "$tname" | awk -F. '{print $1}')
+		if [[ "$tname" != "$currtable" ]]
+			then 
+			
+			touch ./DataBases/$db_check/$tname.table
+			echo "table cretaed"
+			echo "enter each column name separetly" #getting column names 
+			echo -n % >> ./DataBases/$db_check/$tname.table
+			for (( c=1; c<=$cols; c++ ))
+			do 
+			read colsname
+			echo -n $colsname >> ./DataBases/$db_check/$tname.table
+			
+			if [[ $c -lt $cols ]] #typing comma after each column name but the last one 
+			then
+			echo -n , >>  ./DataBases/$db_check/$tname.table
+			fi
+			
+			done #end of loop
+			echo "" >>  ./DataBases/$db_check/$tname.table
+			echo "columns inserted"
+			else
+			echo "can't use Dublicate table name"
+		fi
+	else 
+		echo "Only Databse owner can cretae table"
+	fi
+ 
+ else 
+		echo "Only admin user can run this program" 
+fi 

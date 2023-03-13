@@ -1,0 +1,29 @@
+er=`whoami` #get the currnet user name 
+ #check if the current user is an admin user
+if [[ $currentuser == $(grep -w "$currentuser" DB_admins.db) ]] 
+ then
+    cat DB_admins.db   #list all admin users
+    echo "Enter the name of a user to delete"
+	read delete_user   #get the selected user
+	
+	#check if the entered user doesn't exist in the list
+	if [[ $delete_user != $(grep -wi "$delete_user" DB_admins.db) ]]
+	 then	
+		echo "User not found or wrong Synatx"
+	
+	#check if the selected user is Oracle , if it's not user will be deleted
+	elif [[ $delete_user == $(grep -i "oracle" DB_admins.db) ]]
+	 then	
+		echo "Oracle user can't be deleted"
+	
+	else
+cat DB_admins.db | sed -i "s/$delete_user//" DB_admins.db
+echo "User deleted"
+	fi 
+else 
+		echo "only admin user can run this program" 
+fi 
+
+
+
+
